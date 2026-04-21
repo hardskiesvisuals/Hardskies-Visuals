@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HardSkies Visuals | Post-Producción de Élite</title>
+    
+    <link rel="icon" type="image/jpeg" href="FAVICON.jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    <style>
+        :root {
+            --negro: #050505;
+            --rojo: #ff0000;
+            --blanco: #ffffff;
+            --gris: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
+
+        body {
+            background-color: var(--negro);
+            color: var(--blanco);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .urgency-banner {
+            background: var(--rojo);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            text-transform: uppercase;
+        }
+        .banner-logo { height: 20px; width: auto; filter: brightness(0) invert(1); }
+
+        #custom-cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--rojo);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.15s ease;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at center, #110000 0%, var(--negro) 100%);
+        }
+
+        .logo-box {
+            width: clamp(200px, 35vw, 320px); 
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+        }
+
+        .tagline {
+            font-size: clamp(0.7rem, 2.5vw, 1rem);
+            letter-spacing: 8px; 
+            color: var(--rojo);
+            margin-bottom: 40px; 
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .hero h1 { font-size: clamp(3rem, 12vw, 8rem); line-height: 0.9; letter-spacing: -3px; }
+
+        .marquee { width: 100%; padding: 45px 0; background: #080808; overflow: hidden; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
+        .marquee-content { display: flex; white-space: nowrap; width: max-content; animation: scroll 20s linear infinite; }
+        .marquee-content span { font-family: 'Syne'; font-size: 1.5rem; font-weight: 800; padding: 0 60px; color: rgba(255,255,255,0.2); text-transform: uppercase; }
+        .marquee-content span b { color: var(--rojo); }
+
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        .section { padding: 120px 20px; max-width: 1200px; margin: 0 auto; }
+
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; }
+        .video-item { aspect-ratio: 9/16; background: #111; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-glass); }
+        .video-item video { width: 100%; height: 100%; object-fit: cover; }
+
+        .art-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .art-item { border-radius: 24px; overflow: hidden; border: 1px solid var(--border-glass); }
+        .art-item img { width: 100%; filter: grayscale(1); transition: 0.6s; }
+        .art-item:hover img { filter: grayscale(0); }
+
+        .comparison-container { position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 30px; overflow: hidden; }
+        .img-after { position: absolute; top:0; left:0; width:100%; height:100%; clip-path: inset(0 50% 0 0); }
+        .comparison-container img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-line { position: absolute; top:0; bottom:0; left:50%; width:4px; background: var(--rojo); z-index:3; box-shadow: 0 0 15px var(--rojo); }
+
+        .btn-elite {
+            display: inline-flex; align-items: center; gap: 12px; padding: 18px 35px;
+            background: var(--rojo); color: white; text-decoration: none; font-weight: 800;
+            border-radius: 100px; font-family: 'Syne'; text-transform: uppercase;
+        }
+
+        footer { padding: 80px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="urgency-banner">
+        <img src="LOGO.webp" class="banner-logo">
+        ⚠️ Quedan solo 2 cupos para proyectos esta semana
+    </div>
+    
+    <div id="custom-cursor"></div>
+
+    <audio id="bg-music" loop>
+        <source src="Please, Don't.mp3" type="audio/mpeg">
+    </audio>
+
+    <header class="hero">
+        <img src="LOGO.webp" class="logo-box" data-aos="zoom-in">
+        <div class="tagline">El impacto comienza con lo visual</div>
+        <h1>HARD SKIES<br><span style="color:var(--rojo)">VISUALS</span></h1>
+    </header>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>CAMISETAS <b>PERSONALIZADAS</b></span>
+            <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
+            <span>VINIL <b>ADHESIVO</b></span>
+            <span>DISEÑO PARA <b>DTF</b></span>
+            <span>CAMISETAS <b>PERSONALIZADAS</b></span>
+            <span>IMPRESIÓN <b>PUBLICITARIA</b></span>
+            <span>VINIL <b>ADHESIVO</b></span>
+            <span>DISEÑO PARA <b>DTF</b></span>
+        </div>
+    </div>
+
+    <section class="section">
+        <h2 style="text-align: center; margin-bottom: 60px;">Portafolio</h2>
+        <div class="video-grid">
+            <div class="video-item" data-aos="fade-up">
+                <video src="HV1.mp4" controls playsinline></video>
+            </div>
+            <div class="video-item" data-aos="fade-up" data-aos-delay="100">
+                <video src="HV2.mp4" controls playsinline></video>
+            </div>
+            <div class="video-item" data-aos="fade-up" data-aos-delay="200">
+                <video src="HV3.mp4" controls playsinline></video>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 style="text-align: center; margin-bottom: 50px;">Artes de Exhibición</h2>
+        <div class="art-grid">
+            <div class="art-item"><img src="ART1.webp"></div>
+            <div class="art-item"><img src="ART2.webp"></div>
+            <div class="art-item"><img src="ART3.webp"></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 style="text-align: center; margin-bottom: 40px;">Presets & Color Grading</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div class="comparison-container" onmousemove="moveSlider(event, this)">
+                <img src="PL1.jpg">
+                <img src="PL1.1.jpg" class="img-after">
+                <div class="slider-line"></div>
+            </div>
+            <div class="comparison-container" onmousemove="moveSlider(event, this)">
+                <img src="PL2.jpg">
+                <img src="PL2.1.jpg" class="img-after">
+                <div class="slider-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; padding: 100px 20px;">
+        <a href="https://wa.me/593985571902?text=Hola%20HardSkies%20Visuals!" class="btn-elite">
+            CONTACTAR POR WHATSAPP
+        </a>
+    </section>
+
+    <footer>
+        <div style="color: var(--rojo); font-family: 'Syne'; font-weight: 800; font-size: 1.5rem;">HARD SKIES</div>
+        <p style="font-size: 0.7rem; color: var(--gris); margin-top: 10px;">&copy; 2026 Todos los derechos reservados</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        // Cursor personalizado
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Slider de comparación
+        function moveSlider(e, container) {
+            const rect = container.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const percent = (x / rect.width) * 100;
+            container.querySelector('.img-after').style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+            container.querySelector('.slider-line').style.left = percent + '%';
+        }
+
+        // Música
+        let playing = false;
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            if(!playing) { audio.play(); playing = true; } 
+            else { audio.pause(); playing = false; }
+        }
+    </script>
+</body>
+</html>
