@@ -22,13 +22,13 @@
             --border-glass: rgba(255, 255, 255, 0.15);
         }
 
-        /* CORRECCIÓN DE DESPLAZAMIENTO HORIZONTAL */
         html, body { 
             overflow-x: hidden; 
             width: 100%;
             position: relative;
         }
 
+        /* Cursor personalizado */
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
 
         body {
@@ -54,7 +54,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
+            z-index: 999999;
             text-transform: uppercase;
         }
         .banner-logo {
@@ -70,46 +70,43 @@
             background: var(--rojo);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 999999;
+            z-index: 99999999;
             mix-blend-mode: difference;
             transition: transform 0.1s ease-out;
             transform: translate(-50%, -50%);
-            left: -100px; /* Fuera de vista inicial */
+            left: -100px;
         }
 
-        /* BOTÓN DE MÚSICA */
+        /* BOTÓN DE MÚSICA - CONFIGURACIÓN DE FUSIÓN ABSOLUTA */
         .music-control {
             position: fixed !important;
             bottom: 30px !important;
-            right: 25px !important;
-            width: 55px !important;
-            height: 55px !important;
-            z-index: 999999999 !important;
-            background: rgba(10, 10, 10, 0.8) !important; 
-            backdrop-filter: blur(15px) !important;
-            -webkit-backdrop-filter: blur(15px) !important;
-            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            right: 30px !important;
+            width: 60px !important;
+            height: 60px !important;
+            z-index: 2147483647 !important; /* Capa superior máxima del navegador */
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 2px solid var(--border-glass) !important;
             border-radius: 50% !important;
-            cursor: pointer !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5) !important;
+            transition: all 0.3s ease;
             pointer-events: auto !important;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            -webkit-tap-highlight-color: transparent;
         }
         
         .music-control i { 
-            font-size: 1.3rem; 
+            font-size: 1.2rem; 
             color: var(--blanco); 
-            pointer-events: none;
         }
 
         .music-control.playing {
             border-color: var(--rojo) !important;
-            background: rgba(255, 0, 0, 0.2) !important;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3) !important;
+            background: rgba(255, 0, 0, 0.15) !important;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3) !important;
         }
         .music-control.playing i { color: var(--rojo); }
 
@@ -133,7 +130,7 @@
         }
 
         .tagline {
-            font-size: clamp(0.7rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 1.2rem);
             letter-spacing: 8px; 
             color: var(--rojo);
             margin-bottom: 40px; 
@@ -396,14 +393,15 @@
             .music-control {
                 bottom: 25px !important;
                 right: 20px !important;
-                width: 52px !important;
-                height: 52px !important;
+                width: 55px !important;
+                height: 55px !important;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- BANNER FIJO -->
     <div class="urgency-banner">
         <img src="https://raw.githubusercontent.com/hardskiesvisuals/Hardskies-Visuals/main/LOGO.webp" class="banner-logo" alt="Logo Banner">
         ⚠️ Quedan solo 2 cupos para proyectos esta semana
@@ -442,6 +440,7 @@
         </div>
     </div>
 
+    <!-- PORTAFOLIO -->
     <section class="section">
         <h2 style="text-align: center; margin-bottom: 60px;" data-aos="fade-up">Portafolio</h2>
         <div class="video-grid">
@@ -472,6 +471,7 @@
         </div>
     </section>
 
+    <!-- ARTES -->
     <section class="section">
         <h2 style="text-align: center; margin-bottom: 50px;" data-aos="fade-up">Artes de Exhibición</h2>
         <div class="art-description" data-aos="fade-up">
@@ -485,6 +485,7 @@
         </div>
     </section>
 
+    <!-- PRESETS -->
     <section class="section">
         <h2 style="text-align: center; margin-bottom: 25px;" data-aos="fade-up">Presets & Color Grading</h2>
         <div class="presets-description" data-aos="fade-up">
@@ -504,6 +505,7 @@
         </div>
     </section>
 
+    <!-- CONTACTO / CTA -->
     <section class="cta-box">
         <div class="conversion-hook" data-aos="fade-up">¡ ÚLTIMO LLAMADO !</div>
         <div class="authority-message" data-aos="fade-up" data-aos-delay="100">
@@ -536,16 +538,17 @@
         <div class="footer-tag">EL ARTE ES MI DOPAMINA | EST. 2016</div>
     </footer>
 
+    <!-- BOTÓN DE MÚSICA UBICADO AL FINAL DEL BODY PARA MÁXIMA PERSISTENCIA -->
     <div class="music-control" id="musicBtn" role="button" aria-label="Toggle music">
         <i class="fa-solid fa-music"></i>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // Inicialización de AOS
+        // Inicialización de Animaciones
         AOS.init({ duration: 1000, once: true });
         
-        // Cursor Personalizado Optimizado para no causar scroll lateral
+        // Cursor Personalizado
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', e => {
             const x = e.clientX;
@@ -553,7 +556,7 @@
             cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
         });
 
-        // Comparador de Presets
+        // Lógica de Comparación de Imágenes (Presets)
         function moveSlider(e, container) {
             const rect = container.getBoundingClientRect();
             const clientX = (e.type.includes('touch')) ? e.touches[0].clientX : e.clientX;
@@ -564,7 +567,7 @@
             container.querySelector('.slider-line').style.left = percent + '%';
         }
 
-        // LÓGICA DE MÚSICA CORREGIDA
+        // CONTROL DE MÚSICA
         const audio = document.getElementById('bg-music');
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = musicBtn.querySelector('i');
@@ -578,9 +581,7 @@
                         musicIcon.className = "fa-solid fa-pause";
                         musicBtn.classList.add('playing');
                     })
-                    .catch(e => {
-                        console.log("Interacción requerida por el navegador");
-                    }); 
+                    .catch(e => { console.log("Interacción requerida para audio"); }); 
             } else { 
                 audio.pause(); 
                 isPlaying = false;
@@ -589,16 +590,14 @@
             }
         }
 
-        // Eventos para el botón de música (Touch y Click)
         musicBtn.addEventListener('click', toggleMusic);
         musicBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
             toggleMusic();
         }, { passive: false });
 
-        // Asegurar que al recargar la página no haya scroll
+        // Reset scroll al cargar
         window.scrollTo(0, 0);
     </script>
 </body>
 </html>
-  
